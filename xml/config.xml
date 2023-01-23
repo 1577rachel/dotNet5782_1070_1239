@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<config>
+
+	<dl>xml</dl>
+	<dl-packages>
+    <!--<xml namespace="DalXml" class="DalXml">DalXml</xml>-->  <!--to run on files-->
+    <xml namespace="DalObject" class="DalObject">DalObject</xml>  <!--to run on DalObject-->
+	</dl-packages>
+  
+</config>
+
+

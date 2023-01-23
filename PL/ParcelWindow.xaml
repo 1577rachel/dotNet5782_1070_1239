@@ -1,0 +1,212 @@
+﻿<Window x:Class="PL.ParcelWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d" 
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanMinimize" 
+        Title="ParcelWindow" Height="720" Width="520">
+    <Grid>
+        <Grid x:Name="addParcel" Visibility="Hidden">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="8"/>
+                <RowDefinition Height="79*"/>
+                <RowDefinition Height="89*"/>
+                <RowDefinition Height="90*"/>
+                <RowDefinition Height="83*"/>
+                <RowDefinition Height="45.16"/>
+            </Grid.RowDefinitions>
+            <Grid Background="#FF673AB7" Opacity="0.7" >
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <TextBlock TextWrapping="Wrap" Width="221" FontFamily="Consolas" FontSize="16" FontWeight="Bold" Height="18" Foreground="White"><Run FlowDirection="RightToLeft" Language="he-il" Text="הוספת חבילה "/><LineBreak/><Run FlowDirection="RightToLeft" Language="he-il"/><LineBreak/><Run FlowDirection="RightToLeft" Language="he-il"/></TextBlock>
+                    <Button x:Name="BcloseAdd" Background="{x:Null}" BorderBrush="{x:Null}" Click="BcloseAdd_Click"  >
+                        <materialDesign:PackIcon Kind="Close" Height="25" Width="25" VerticalAlignment="Center" />
+                    </Button>
+                </StackPanel>
+            </Grid>
+            <TextBox x:Name="TBParcelSenderId" Grid.Row="2" materialDesign:HintAssist.Hint="מספר מזהה שולח" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center"   TextAlignment="Center" Margin="92,0,92,0"  Height="60" MaxLength="9" KeyDown="TBParcelSenderId_KeyDown" FontSize="20" FontWeight="Bold"  />
+            <TextBox x:Name="TBParcelReciverId" Grid.Row="3" materialDesign:HintAssist.Hint="מספר מזהה מקבל" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center"   TextAlignment="Center" Margin="92,0,92,0"  Height="59" MaxLength="9" KeyDown="TBParcelReciverId_KeyDown" FontSize="20" FontWeight="Bold"  />
+
+            <Button x:Name="BAddParcel" Grid.Row="6" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+             materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="הוספה למאגר הנתונים" Margin="0,16,0,-3" Click="BAddParcel_Click"/>
+
+            <ComboBox x:Name="CBPriorSelector"  Grid.Row="4" Style="{StaticResource MaterialDesignOutlinedComboBox}"  materialDesign:HintAssist.Hint="דחיפות חבילה"   Margin="92,52,92,45" FontWeight="Bold" FontSize="14" />
+            <ComboBox x:Name="CBWeightSelctor" Grid.Row="5" Style="{StaticResource MaterialDesignOutlinedComboBox}"  materialDesign:HintAssist.Hint="משקל חבילה"  Margin="92,43,92,43" FontWeight="Bold" FontSize="14" />
+
+        </Grid>
+
+        <Grid x:Name="updateParcel" Visibility="Hidden">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="39"/>
+                <RowDefinition Height="75*"/>
+                <RowDefinition Height="51*"/>
+                <RowDefinition Height="143*"/>
+                <RowDefinition Height="136*"/>
+                <RowDefinition Height="211*"/>
+                <RowDefinition Height="49*"/>
+
+            </Grid.RowDefinitions>
+            <materialDesign:Card  Grid.Row="3" Background="{DynamicResource PrimaryHueLightBrush}" Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}" Padding="8" 
+                    UniformCornerRadius="6" Margin="10,10,10,10">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock  Grid.Row="0" Grid.Column="0" Text=":שיוך"  FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="106,10,44,21" />
+                    <TextBlock Grid.Column="1" Text=":איסוף"  FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="97,49,53,31" Grid.RowSpan="2" />
+                    <TextBlock  Grid.Row="0" Grid.Column="1" Text=":יצירה"  FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="97,10,63,20" TextDecorations="{x:Null}" />
+                    <TextBlock Grid.Column="0" Text=":אספקה"  FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="95,51,47,33" Grid.RowSpan="2" />
+                    <TextBlock  Grid.Row="0" Grid.Column="1" Text="{Binding Path=Requested}" FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="10,27,10,5" TextAlignment="Center" />
+                    <TextBlock  Grid.Row="0" Grid.Column="0" Text="{Binding Path=Assigned}" FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="10,30,10,53" Grid.RowSpan="2" TextAlignment="Center" />
+                    <TextBlock  Grid.Row="1" Grid.Column="1" Text="{Binding Path=PickedUp}" FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="10,18,10,10" TextAlignment="Center" />
+                    <TextBlock  Grid.Row="1" Grid.Column="0" Text="{Binding Path=Delivered}" FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="10,20,10,10" TextAlignment="Center" />
+                </Grid>
+
+            </materialDesign:Card>
+            <Grid Background="#FF673AB7" Opacity="0.7" Margin="0,-6,0,0" >
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <TextBlock TextWrapping="Wrap" Width="221" FontFamily="Consolas" FontSize="16" FontWeight="Bold" Height="18" Foreground="White"><Run FlowDirection="RightToLeft" Language="he-il" Text="פרטי חבילה"/><LineBreak/><Run/><LineBreak/><Run FlowDirection="RightToLeft"/><LineBreak/><Run FlowDirection="RightToLeft"/><LineBreak/><Run FlowDirection="RightToLeft"/></TextBlock>
+                    <Button x:Name="BcloseUpdate" Background="{x:Null}" BorderBrush="{x:Null}" Click="BcloseUpdate_Click" >
+                        <materialDesign:PackIcon Kind="Close" Height="25" Width="25" VerticalAlignment="Center" />
+                    </Button>
+                </StackPanel>
+            </Grid>
+            <Grid x:Name="Cards" Grid.Row="4" Margin="0,22,0,1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <materialDesign:Card   Background="{DynamicResource PrimaryHueLightBrush}" Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"   
+                                      UniformCornerRadius="6" Margin="10,-11,10,10" >
+                    <Grid>
+                        <Grid Margin="7,32,7,10" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Text="רחפן מבצע" Margin="152,-22,124,22" FontWeight="Bold" FontSize="14" TextAlignment="Center" Grid.ColumnSpan="2" ></TextBlock>
+                            <TextBlock  Grid.Row="0" Grid.Column="0" Text="{Binding Path=MyDrone.BatteryStatus, StringFormat=\{0:#0.00\}%}" FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="92,6,92,4" ></TextBlock>
+                            <TextBlock  Grid.Row="0" Grid.Column="0" Text=":סוללה"  FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="152,6,7,4" ></TextBlock>
+                            <TextBlock  Grid.Row="1" Grid.Column="1" Text=":מיקום רחפן"  FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="132,9,10,1" />
+                            <TextBlock  Grid.Row="0" Grid.Column="1" Text=":מס' מזהה"  FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="139,6,10,4" />
+                            <TextBlock  Grid.Row="1" Grid.Column="0" Text="{Binding Path=MyDrone.CurrentLocation}" FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="92,7,116,1" Grid.ColumnSpan="2" />
+                            <TextBlock  Grid.Row="0" Grid.Column="1" Text="{Binding Path=MyDrone.Id}" FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="46,6,104,4" />
+                        </Grid>
+                    </Grid>
+
+
+                </materialDesign:Card>
+            </Grid>
+            <Grid Grid.Row="5" Margin="0,4,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <materialDesign:Card  Grid.Row="4" Grid.Column="1" Background="{DynamicResource PrimaryHueLightBrush}" Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}" Padding="8" 
+                    UniformCornerRadius="6" Margin="10,24,10,10">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="11*"/>
+                            <RowDefinition Height="35*"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock  Grid.Row="0" Text=":שם השולח"  FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="128,21,10,21" />
+                            <TextBlock  Grid.Row="0" Text="{Binding Path=Sender.Name}" FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="29,21,92,14" TextAlignment="Center" RenderTransformOrigin="0.5,0.5" >
+                                <TextBlock.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform AngleY="-0.209"/>
+                                        <RotateTransform/>
+                                        <TranslateTransform Y="-0.33"/>
+                                    </TransformGroup>
+                                </TextBlock.RenderTransform>
+                            </TextBlock>
+                            <TextBlock  Grid.Row="1" Text=":מס' מזהה"  FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="128,10,10,31" />
+                            <TextBlock  Grid.Row="1" Text="{Binding Path=Sender.Id}"  FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="32,10,112,31" />
+                        </Grid>
+                        <TextBlock Text="פרטי שולח" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Height="20" Width="184" TextAlignment="Center" FontWeight="Bold"><Run FlowDirection="RightToLeft" Language="he-il" /></TextBlock>
+                    </Grid>
+                </materialDesign:Card>
+
+                <materialDesign:Card  Grid.Row="4" Grid.Column="0" Background="{DynamicResource PrimaryHueLightBrush}" Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}" Padding="8" 
+                    UniformCornerRadius="6" Margin="10,24,10,10">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="11*"/>
+                            <RowDefinition Height="35*"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock  Grid.Row="0" Text=":שם המקבל" FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="119,21,10,21" ><Run /><Run FlowDirection="RightToLeft" Language="he-il"/></TextBlock>
+                            <TextBlock  Grid.Row="0" Text="{Binding Path=Receiver.Name}"  FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="29,20,108,16" TextAlignment="Right" RenderTransformOrigin="0.5,0.5" >
+                                <TextBlock.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="-0.512"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </TextBlock.RenderTransform>
+                            </TextBlock>
+                            <TextBlock  Grid.Row="1" Text=":מס' מזהה"  FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="120,13,14,27" RenderTransformOrigin="0.746,0.965" />
+                            <TextBlock  Grid.Row="1" Text="{Binding Path=Receiver.Id}" FontWeight="Bold" FontFamily="Consolas" FontSize="14" Margin="30,13,109,27" />
+                        </Grid>
+                        <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Height="20" Width="184" TextAlignment="Center" FontWeight="Bold"><Run FlowDirection="RightToLeft" Language="he-il" Text="פרטי מקבל"/></TextBlock>
+                    </Grid>
+                </materialDesign:Card>
+
+            </Grid>
+
+            <Button x:Name="BUpdateParcel" Grid.Row="6" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+             materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="" Margin="0,17,0,0"
+             IsEnabled="False"/>
+
+            <Grid Grid.Row="1" Margin="0,0,0,3">
+                <TextBlock TextWrapping="Wrap" Margin="260,21,126,27" FontWeight="Bold" FontFamily="Consolas" FontSize="14"><Run Text=":"/><Run FlowDirection="RightToLeft" Language="he-il" Text="מספר חבילה"/><LineBreak/><Run FlowDirection="RightToLeft" Language="he-il"/></TextBlock>
+                <TextBlock Text="{Binding Path=Id}" TextWrapping="Wrap" Margin="195,18,260,29" FontWeight="Bold" FontFamily="Consolas" FontSize="18" TextAlignment="Center"/>
+                <TextBlock TextWrapping="Wrap" Margin="413,92,44,-40" FontWeight="Bold" FontFamily="Consolas" FontSize="14"><Run Text=":"/><Run FlowDirection="RightToLeft" Language="he-il" Text="משקל"/></TextBlock>
+                <TextBlock Text="{Binding Weight}" TextWrapping="Wrap" Margin="296,87,112,-48" FontWeight="Bold" FontFamily="Consolas" FontSize="18" TextAlignment="Center"/>
+                <TextBlock TextWrapping="Wrap" Margin="170,91,275,-47" FontWeight="Bold" FontFamily="Consolas" FontSize="14"><Run Text=":"/><Run FlowDirection="RightToLeft" Language="he-il" Text="דחיפות"/></TextBlock>
+                <TextBlock Text="{Binding Prior}" TextWrapping="Wrap" Margin="62,87,370,-46" FontWeight="Bold" FontFamily="Consolas" FontSize="18" TextAlignment="Center"/>
+            </Grid>
+
+            <Button x:Name="BDelete" Visibility="Hidden" Grid.Row="1" Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+                materialDesign:ButtonProgressAssist.IsIndeterminate="True" Content="מחיקת חבילה" Margin="24,21,351,22"
+                Background="#FFFF0909" BorderBrush="#FFF14A2F" FontSize="12" FontWeight="Bold" Click="BDelete_Click" />
+            <Button x:Name="Breciver" Style="{StaticResource MaterialDesignFloatingActionButton}" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndeterminate="True" Visibility="Hidden"  HorizontalAlignment="Left" Margin="19,35,0,0"  Width="30" Height="30" Grid.Row="5" VerticalAlignment="Top" Click="Breciver_Click" >
+                <materialDesign:PackIcon Kind="CogOutline" Height="20" Width="29" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            </Button>
+            <Button x:Name="Bsender"   Visibility="Hidden"  Style="{StaticResource MaterialDesignFloatingActionButton}" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndeterminate="True" HorizontalAlignment="Left" Margin="280,35,0,0" Grid.Row="5" VerticalAlignment="Top" Click="Bsender_Click" Height="27" Width="28" >
+                <materialDesign:PackIcon Kind="CogOutline" Height="20" Width="29" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            </Button>
+            <Button x:Name="Bdrone"   Visibility="Hidden" Style="{StaticResource MaterialDesignFloatingActionButton}" materialDesign:ButtonProgressAssist.IsIndicatorVisible="True" materialDesign:ButtonProgressAssist.Value="-1" materialDesign:ButtonProgressAssist.IsIndeterminate="True" HorizontalAlignment="Left" Margin="24,17,0,0" Grid.Row="4" VerticalAlignment="Top" Width="30" Click="Bdrone_Click" Height="30" RenderTransformOrigin="0.5,0.5">
+                <materialDesign:PackIcon Kind="CogOutline" Height="20" Width="29" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            </Button>
+        </Grid>
+    </Grid>
+</Window>
